@@ -27,14 +27,14 @@ library(ggplot2)
 
 ####
 
-library(SparkR, lib.loc = paste0(Sys.getenv("SPARK_HOME"), "/R/lib/"))
-
-# Session
-sparkR.session.stop()
-sparkR.session(master = "yarn",
-               sparkConfig = list('spark.executor.memory' = '10g',
-                                  'spark.executor.instances' = '18',
-                                  'spark.executor.cores' = '4',
-                                  'spark.driver.memory' = '4g'))
-# Log level
-setLogLevel("ERROR")
+# library(SparkR, lib.loc = paste0(Sys.getenv("SPARK_HOME"), "/R/lib/"))
+# 
+# # Session
+# sparkR.session.stop()
+# sparkR.session(master = "yarn",
+#                sparkConfig = list('spark.executor.memory' = '10g',
+#                                   'spark.executor.instances' = '18',
+#                                   'spark.executor.cores' = '4',
+#                                   'spark.driver.memory' = '4g'))
+# # Log level
+# setLogLevel("ERROR")

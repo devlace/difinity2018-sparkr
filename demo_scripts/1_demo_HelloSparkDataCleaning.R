@@ -11,33 +11,34 @@
 
 
 # Load SparkR package --------------------
-library(SparkR, lib.loc = paste0(Sys.getenv("SPARK_HOME"), "/R/lib/"))
+library(SparkR)
 
 
 
 # Start and Stop a session --------------------
 
-# Start
-sparkR.session()
-
-# Inspect session
-sparkR.conf()
-
-# Check spark version
-sparkR.version()
-
-# Stop 
-sparkR.session.stop()
+# # Start
+# sparkR.session()
+# 
+# # Inspect session
+# sparkR.conf()
+# 
+# # Check spark version
+# sparkR.version()
+# 
+# # Stop 
+# sparkR.session.stop()
 
 
 
 # Start a custom session ---------------
 
-sparkR.session(master = "yarn",
-               sparkConfig = list('spark.executor.memory' = '10g',
-                                  'spark.executor.instances' = '18',
-                                  'spark.executor.cores' = '4',
-                                  'spark.driver.memory' = '4g'))
+# sparkR.session(sparkConfig = list('spark.executor.memory' = '10g',
+#                                   'spark.executor.instances' = '18',
+#                                   'spark.executor.cores' = '4',
+#                                   'spark.driver.memory' = '4g'))
+sparkR.session()
+
 # Log level
 setLogLevel("ERROR")
 
@@ -52,7 +53,7 @@ schema <- structType(structField("BibNumber", "integer"),
                      structField("CallNumber", "string"),
                      structField("CheckoutDateTime", "string"))
 
-sdfCheckouts <- SparkR::read.df("/data/seattle-library/Checkouts_By_Title_Data_Lens/",
+sdfCheckouts <- SparkR::read.df("dbfs:/mnt/data/seattle-library/Checkouts_By_Title_Data_Lens/",
                                 source = "csv",
                                 header = "true",
                                 schema = schema,
@@ -66,14 +67,14 @@ nrow(sdfCheckouts)
 # Read data (w/o schema) -------------------------
 
 # Library Collection
-sdfCollection <- SparkR::read.df("/data/seattle-library/Library_Collection_Inventory.csv",
+sdfCollection <- SparkR::read.df("dbfs:/mnt/data/seattle-library/Library_Collection_Inventory.csv",
                                  source = "csv",
                                  header = "true",
                                  inferSchema = "true",
                                  quote = '"')
 
 # Library Data Dictionary
-sdfIls <- SparkR::read.df("/data/seattle-library/Integrated_Library_System__ILS__Data_Dictionary.csv",
+sdfIls <- SparkR::read.df("dbfs:/mnt/data/seattle-library/Integrated_Library_System__ILS__Data_Dictionary.csv",
                           source = "csv",
                           header = "true",
                           inferSchema = "true")
